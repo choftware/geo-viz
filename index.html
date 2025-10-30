@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="controls">
+        <div class="controls-row">
+          <div class="file-upload">
+            <label for="file-input" class="upload-button">
+              Load CSV
+              <input type="file" id="file-input" accept=".csv" />
+            </label>
+            <span id="file-name" class="file-name"></span>
+          </div>
+
+          <div class="date-controls">
+            <button id="prev-day" class="nav-button" disabled>⬅️</button>
+            <input type="date" id="date-picker" class="date-picker"/>
+            <button id="next-day" class="nav-button" disabled>➡️</button>
+          </div>
+
+          <div class="control-group">
+            <label for="time-range">Range:</label>
+            <select id="time-range" class="time-scale-select">
+              <option value="day">Day</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="granularity">Granularity:</label>
+            <select id="granularity" class="time-scale-select">
+              <option value="location">Individual</option>
+              <option value="day">Daily</option>
+            </select>
+
+          </div>
+
+          <button id="play-pause" class="play-button" disabled>
+            <span id="play-icon">▶️</span>
+          </button>
+          <button id="reset-animation" class="control-button" disabled>↪️</button>
+
+          <div class="speed-control">
+            <label for="speed-slider">Speed:</label>
+            <input type="range" id="speed-slider" min="1" max="10" value="5" />
+            <span id="speed-value">5x</span>
+          </div>
+
+          <button id="toggle-insights" class="control-button" disabled>Insights</button>
+        </div>
+
+        <div class="animation-progress" id="animation-progress" style="display: none">
+          <div class="progress-info">
+            <span class="progress-time" id="progress-time">--:--</span>
+            <span class="progress-location" id="progress-location">Starting...</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+      </div>
+        <div class="main-content">
+          <div class="map-container">
+            <div id="map"></div>
+          </div>
+
+          <div class="insights-panel" id="insights-panel" style="display: none;">
+            <div class="insights-header">
+              <h3>Insights</h3>
+              <button id="close-insights" class="toggle-button">x</button>
+            </div>
+
+            <div class="insights-summary">
+              <span id="insights-count">Analysizing <strong>0</strong> locations in current view</span>
+              <button id="refresh-insights" class="refresh-insights-button">Refresh</button>
+            </div>
+
+            <div class="insights-content">
+              <div class="insight-section">
+                <h4>By Day of Week</h4>
+                <div id="day-of-week-chart" class="chart-container"></div>
+              </div>
+
+              <div class="insight-section">
+                <h4>By Hour of Day</h4>
+                <div id="hour-of-day-chart" class="chart-container"></div>
+              </div>
+
+              <div class="insight-section">
+                <h4>Heatmap: Day x Hour</h4>
+                <div class="filter-controls">
+                  <select id="day-filter" class="insight-filter">
+                    <option value="all">All Days</option>
+                    <option value="0">Sunday</option>
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                    <option value="6">Saturday</option>
+                  </select>
+                </div>
+                <div id="heatmap-chart" class="chart-container"></div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="timeline-container">
+            <div class="timeline-header">
+              <h3>Timeline for <span id="selected-date">--</span></h3>
+              <button id="toggle-timeline">Hide</button>
+            </div>
+            <div id="timeline-list" class="timeline-list"></div>
+          </div>
+        </div>      
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
