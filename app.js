@@ -1,7 +1,3 @@
-// TODO
-// remove hide button
-// something is happening with reset not fully resetting?
-
 // Global vars
 let map;
 let markers = [];
@@ -375,7 +371,7 @@ function updateMap() {
     const bounds = L.latLngBounds(
       allLocations.map(loc => [loc.latitude, loc.longitude])
     );
-    map.fitBounds(bounds, { padding: [50, 50] });
+    // map.fitBounds(bounds, { padding: [50, 50] });
     return;
   }
 
@@ -401,7 +397,7 @@ function updateMap() {
     const bounds = L.latLngBounds(
       filteredLocations.map(loc => [loc.latitude, loc.longitude])
     );
-    map.fitBounds(bounds, { padding: [50, 50] });
+    // map.fitBounds(bounds, { padding: [50, 50] });
   }
 }
 

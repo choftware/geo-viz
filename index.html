@@ -30,7 +30,7 @@
               <option value="day">Day</option>
               <option value="week">Week</option>
               <option value="month">Month</option>
-              <option value="year">Year</option>
+              <option value="year" selected="selected">Year</option>
             </select>
           </div>
 
@@ -38,7 +38,7 @@
             <label for="granularity">Granularity:</label>
             <select id="granularity" class="time-scale-select">
               <option value="location">Individual</option>
-              <option value="day">Daily</option>
+              <option value="day" selected="selected">Daily</option>
             </select>
 
           </div>
@@ -118,7 +118,7 @@
           <div class="timeline-container">
             <div class="timeline-header">
               <h3>Timeline for <span id="selected-date">--</span></h3>
-              <button id="toggle-timeline">Hide</button>
+              <button id="toggle-timeline" style="display: none;">Hide</button>
             </div>
             <div id="timeline-list" class="timeline-list"></div>
           </div>
