@@ -3,8 +3,6 @@ let map;
 let markers = [];
 let allLocations = [];
 let filteredLocations = [];
-let currentDateIndex = 0;
-let availableDates = [];
 let animationInterval = null;
 let isPlaying = false;
 let animationIndex = 0;
@@ -135,17 +133,8 @@ document.getElementById('file-input').addEventListener('change', function(e) {
       const dateStr = loc.datetime.toISOString().split('T')[0];
       dateSet.add(dateStr);
     });
-    availableDates = Array.from(dateSet).sort();
-
-    // set initial
-    currentDateIndex = 0;
-    document.getElementById('date-picker').value = availableDates[currentDateIndex];
-    document.getElementById('date-picker').min = availableDates[0];
-    document.getElementById('date-picker').max = availableDates[availableDates.length - 1];
 
     // enable controls
-    document.getElementById('prev-day').disabled = false
-    document.getElementById('next-day').disabled = false
     document.getElementById('play-pause').disabled = false
     document.getElementById('reset-animation').disabled = false
     document.getElementById('toggle-insights').disabled = false;
@@ -158,27 +147,13 @@ document.getElementById('file-input').addEventListener('change', function(e) {
 });
 
 function filterLocationsByRange() {
-  const timeRange = document.getElementById('time-range').value;
-  const selectedDate = document.getElementById('date-picker').value;
-  const startDate = new Date(selectedDate);
+  const selectedStartDate = document.getElementById('start-date-picker').value;
+  const startDate = new Date(selectedStartDate);
   startDate.setHours(0, 0, 0, 0);
 
-  let endDate = new Date(startDate);
-
-  switch (timeRange) {
-    case 'day':
-      endDate.setDate(endDate.getDate() + 1);
-      break;
-    case 'week':
-      endDate.setDate(endDate.getDate() + 7);
-      break;
-    case 'month':
-      endDate.setDate(endDate.getDate() + 30);
-      break;
-    case 'year':
-      endDate.setFullYear(endDate.getFullYear() + 1);
-      break;
-  }
+  const selectedEndDate = document.getElementById('end-date-picker').value;
+  const endDate = new Date(selectedEndDate);
+  endDate.setHours(0, 0, 0, 0);  
   
   return allLocations.filter(loc => loc.datetime >= startDate && loc.datetime <= endDate);
 }
@@ -237,9 +212,9 @@ function updateView() {
 
 function updateTimeline() {
   const timelineList = document.getElementById('timeline-list');
-  const selectedDate = document.getElementById('date-picker').value;
+  const selectedStartDate = document.getElementById('start-date-picker').value;
 
-  document.getElementById('selected-date').textContent = selectedDate;
+  document.getElementById('selected-date').textContent = selectedStartDate;
 
   timelineList.innerHTML = '';
 
@@ -508,20 +483,20 @@ function animateNextFrame() {
   document.getElementById('progress-fill').style.width = progress + '%';
 
   if (isAggregated) {
-    document.getElementById('progress-time').textContent = item.datetime.toLocaleDateString('en-US', {
+    document.getElementById('progress-time').textContent = item?.datetime?.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
       year: 'numeric',
     });
-    document.getElementById('progress-location').textContent = item.name;
+    document.getElementById('progress-location').textContent = item?.name;
   } else {
-    document.getElementById('progress-time').textContent = item.datetime.toLocaleString('en-US', {
+    document.getElementById('progress-time').textContent = item?.datetime?.toLocaleString('en-US', {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
     });
-    document.getElementById('progress-location').textContent = item.name;
+    document.getElementById('progress-location').textContent = item?.name;
   }
 
   // add permanent markers for frame
@@ -596,32 +571,11 @@ document.getElementById('speed-slider').addEventListener('input', function(e) {
   document.getElementById('speed-value').textContent = e.target.value + 'x';
 });
 
-document.getElementById('prev-day').addEventListener('click', function() {
-  if (currentDateIndex > 0) {
-    currentDateIndex--;
-    document.getElementById('date-picker').value = availableDates[currentDateIndex];
-    updateView();
-  }
-});
-
-document.getElementById('next-day').addEventListener('click', function() {
-  if (currentDateIndex < availableDates.length - 1) {
-    currentDateIndex++;
-    document.getElementById('date-picker').value = availableDates[currentDateIndex];
-    updateView();
-  }
-});
-
-document.getElementById('date-picker').addEventListener('change', function(e) {
-  const selectedDate = e.target.value;
-  currentDateIndex = availableDates.indexOf(selectedDate);
-  if (currentDateIndex === -1) {
-    currentDateIndex === 0;
-  }
+document.getElementById('start-date-picker').addEventListener('change', function(e) {
   updateView();
 });
 
-document.getElementById('time-range').addEventListener('change', function() {
+document.getElementById('end-date-picker').addEventListener('change', function(e) {
   updateView();
 });
 

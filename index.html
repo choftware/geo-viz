@@ -19,19 +19,10 @@
           </div>
 
           <div class="date-controls">
-            <button id="prev-day" class="nav-button" disabled>⬅️</button>
-            <input type="date" id="date-picker" class="date-picker"/>
-            <button id="next-day" class="nav-button" disabled>➡️</button>
-          </div>
-
-          <div class="control-group">
-            <label for="time-range">Range:</label>
-            <select id="time-range" class="time-scale-select">
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-              <option value="year" selected="selected">Year</option>
-            </select>
+            <span>Start</span>
+            <input type="date" id="start-date-picker" class="date-picker" value="2025-01-01" />
+            <span>End</span> 
+            <input type="date" id="end-date-picker" class="date-picker" value="2025-12-31"/>
           </div>
 
           <div class="control-group">
