@@ -599,6 +599,9 @@ document.getElementById('toggle-timeline').addEventListener('click', function() 
 // Insights
 
 function generateInsights() {
+
+  const locationsInRange = filterLocationsByRange()
+
   const dayOfWeekCounts = [0,0,0,0,0,0,0];
   const hourOfDayCounts = Array(24).fill(0);
   const heatmapData = {};
@@ -611,7 +614,7 @@ function generateInsights() {
   const bounds = map.getBounds();
   
   let locationsInView = 0;
-  allLocations.forEach(loc => {
+  locationsInRange.forEach(loc => {
     const latLng = L.latLng(loc.latitude, loc.longitude);
 
     if (bounds.contains(latLng)) {
@@ -630,7 +633,7 @@ function generateInsights() {
     hourOfDay: hourOfDayCounts,
     heatmap: heatmapData,
     totalInView: locationsInView,
-    totalLocations: allLocations.length,
+    totalLocations: locationsInRange.length,
   }
 }
 
